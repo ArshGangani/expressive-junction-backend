@@ -1,9 +1,6 @@
 package com.blog.app.entities;
 
 import java.time.LocalDateTime;
-
-import org.apache.catalina.User;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
