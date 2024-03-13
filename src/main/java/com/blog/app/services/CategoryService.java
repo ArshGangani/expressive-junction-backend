@@ -36,6 +36,11 @@ public class CategoryService {
 		categoryDAO.save(theEmployee);
 		
 	}
+	
+	@Transactional
+	public void deleteById(int theId) {
+		categoryDAO.deleteById(theId);
+	}
 
 
 }
