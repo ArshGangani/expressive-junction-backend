@@ -17,7 +17,7 @@ import com.blog.app.services.CategoryService;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/blog")
 public class CategoryRestController {
 
 	private CategoryService categoryServices;
