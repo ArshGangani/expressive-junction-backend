@@ -26,7 +26,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Comment> comments = new HashSet<>();
 
-    //constructor
+    // constructor
 	public User() {
 		super();
 	}

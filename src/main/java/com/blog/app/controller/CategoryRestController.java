@@ -27,9 +27,9 @@ public class CategoryRestController {
 		return categoryService.getAllCategory();
 	}
 	
-	@GetMapping("/category/{CategoryId}")
-	public Category getCategory(@PathVariable Long CategoryId) {	
-		return categoryService.getCategory(CategoryId);
+	@GetMapping("/category/{categoryId}")
+	public Category getCategory(@PathVariable Long categoryId) {	
+		return categoryService.getCategory(categoryId);
 	}
 	
 	@PostMapping("/category")
@@ -37,13 +37,13 @@ public class CategoryRestController {
 		return categoryService.addCategory(category);
 	}
 	
-	@PutMapping("/category/{CategoryId}")
-	public Category updateCategory(@PathVariable Long CategoryId, @RequestBody Category category) {
-		return categoryService.updateCategory(CategoryId, category);
+	@PutMapping("/category/{categoryId}")
+	public Category updateCategory(@PathVariable Long categoryId, @RequestBody Category category) {
+		return categoryService.updateCategory(categoryId, category);
 	}
 	
-	@DeleteMapping("/category/{CategoryId}")
-	public void deleteCategory(@PathVariable Long CategoryId) {
-		categoryService.deleteCategory(CategoryId);
+	@DeleteMapping("/category/{categoryId}")
+	public void deleteCategory(@PathVariable Long categoryId) {
+		categoryService.deleteCategory(categoryId);
 	}
 }

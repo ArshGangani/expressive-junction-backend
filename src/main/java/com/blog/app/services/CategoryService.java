@@ -24,10 +24,10 @@ public class CategoryService {
 	}
 
 	@Transactional
-	public Category getCategory(Long CategoryId) {
-		Category category = categoryDAO.getCategory(CategoryId);
+	public Category getCategory(Long categoryId) {
+		Category category = categoryDAO.getCategory(categoryId);
 		if (category == null) {
-            throw new EntityNotFoundException("Category with ID " + CategoryId + " not found");
+            throw new EntityNotFoundException("Category with ID " + categoryId + " not found");
         }
         return category;
 	}

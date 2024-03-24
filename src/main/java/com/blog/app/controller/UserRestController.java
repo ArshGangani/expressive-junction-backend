@@ -18,60 +18,32 @@ import com.blog.app.services.UserService;
 @RestController
 @RequestMapping("/blog")
 public class UserRestController {
-	private UserService userService;
 	
 	@Autowired
-	public UserRestController(UserService theUserService) {
-		userService = theUserService;
-	}
-	
+	private UserService userService;
 
 	@GetMapping("/user")
-	public List<User> findAll() {
-		return userService.findAll();
+	public List<User> getAllUser() {
+		return userService.getAllUser();
 	}
 
-		
 	@GetMapping("/user/{userId}")
-	public User getUser(@PathVariable int userId) {
-		
-		User theUser = userService.findById(userId);
-		
-		if (theUser == null) {
-			throw new RuntimeException("User id not found - " + userId);
-		}
-		
-		return theUser;
+	public User getUser(@PathVariable Long userId) {
+		return userService.getUser(userId);
 	}
-		
 		
 	@PostMapping("/user")
-	public User addUser(@RequestBody User theUser) {
-		
-		userService.save(theUser);
-		
-		return theUser;
+	public User addUser(@RequestBody User user) {
+		return userService.addUser(user);
 	}
 	
-	@PutMapping("/user")
-	public User updateUser(@RequestBody User theUser) {
-		
-		userService.save(theUser);
-		
-		return theUser;
+	@PutMapping("/user/{userId}")
+	public User updateUser(@PathVariable Long userId, @RequestBody User user) {
+		return userService.updateUser(userId, user);
 	}
 		
 	@DeleteMapping("/user/{userId}")
-	public String deleteUser(@PathVariable int userId) {
-		
-		User theUser = userService.findById(userId);
-		
-		if (theUser == null) {
-			throw new RuntimeException("Employee id not found - " + userId);
-		}
-		
-		userService.deleteById(userId);
-		
-		return "Deleted employee id - " + userId;
+	public void deleteUser(@PathVariable Long userId) {
+		userService.deleteUser(userId);
 	}
 }

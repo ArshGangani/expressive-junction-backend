@@ -21,8 +21,8 @@ public class CategoryDAO {
 	}
 	
 	@Transactional
-	public Category getCategory(Long theId) {
-		return entityManager.find(Category.class, theId);
+	public Category getCategory(Long categoryId) {
+		return entityManager.find(Category.class, categoryId);
 	}
 
 	public Category addCategory(Category category) {
@@ -35,8 +35,8 @@ public class CategoryDAO {
         return entityManager.merge(updatedCategory);
     }
 	
-	public void deleteCategory(Long theId) {
-        Category category = entityManager.find(Category.class, theId);
+	public void deleteCategory(Long categoryId) {
+        Category category = entityManager.find(Category.class, categoryId);
         entityManager.remove(category);
 	}
 	
