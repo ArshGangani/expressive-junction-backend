@@ -13,28 +13,28 @@ public class CommentRestController {
     @Autowired
     private CommentService commentService;
 
-    @GetMapping("/comments")
+    @GetMapping("/comment")
     public List<Comment> getAllComments() {
         return commentService.getAllComments();
     }
 
-    @GetMapping("/comments/{id}")
-    public Comment getCommentById(@PathVariable Long id) {
-        return commentService.getCommentById(id);
+    @GetMapping("/comment/{commentId}")
+    public Comment getComment(@PathVariable Long commentId) {
+        return commentService.getComment(commentId);
     }
 
-    @PostMapping("/comments")
+    @PostMapping("/comment")
     public Comment addComment(@RequestBody Comment comment) {
         return commentService.addComment(comment);
     }
 
-    @PutMapping("/comments/{id}")
-    public Comment updateComment(@PathVariable Long id, @RequestBody Comment comment) {
-        return commentService.updateComment(id, comment);
+    @PutMapping("/comment/{commentId}")
+    public Comment updateComment(@PathVariable Long commentId, @RequestBody Comment comment) {
+        return commentService.updateComment(commentId, comment);
     }
 
-    @DeleteMapping("/comments/{id}")
-    public void deleteComment(@PathVariable Long id) {
-        commentService.deleteComment(id);
+    @DeleteMapping("/comment/{commentId}")
+    public void deleteComment(@PathVariable Long commentId) {
+        commentService.deleteComment(commentId);
     }
 }
