@@ -15,59 +15,35 @@ import org.springframework.web.bind.annotation.RestController;
 import com.blog.app.entities.Category;
 import com.blog.app.services.CategoryService;
 
-
 @RestController
 @RequestMapping("/blog")
 public class CategoryRestController {
-
-	private CategoryService categoryServices;
 	
 	@Autowired
-	public CategoryRestController(CategoryService thecategoryServices) {
-		categoryServices = thecategoryServices;
-	}
-	
+	private CategoryService categoryService;
+
 	@GetMapping("/category")
-	public List<Category> findAll() {
-		return categoryServices.findAll();
+	public List<Category> getAllCategory() {
+		return categoryService.getAllCategory();
 	}
 	
 	@GetMapping("/category/{CategoryId}")
-	public Category getCategory(@PathVariable int CategoryId) {
-		
-		Category thecategory = categoryServices.findById(CategoryId);
-		
-		if (thecategory == null) {
-			throw new RuntimeException("Category id not found - " + CategoryId);
-		}
-		
-		return thecategory;
+	public Category getCategory(@PathVariable Long CategoryId) {	
+		return categoryService.getCategory(CategoryId);
 	}
 	
 	@PostMapping("/category")
-	public Category addCategory(@RequestBody Category thecategory) {
-		categoryServices.save(thecategory);
-		
-		return thecategory;
+	public Category addCategory(@RequestBody Category category) {
+		return categoryService.addCategory(category);
 	}
 	
-	@PutMapping("/category")
-	public Category updateCategory(@RequestBody Category thecategory) {
-		
-		categoryServices.save(thecategory);
-		
-		return thecategory;
+	@PutMapping("/category/{CategoryId}")
+	public Category updateCategory(@PathVariable Long CategoryId, @RequestBody Category category) {
+		return categoryService.updateCategory(CategoryId, category);
 	}
 	
 	@DeleteMapping("/category/{CategoryId}")
-	public String deleteCategory(@PathVariable int CategoryId) {
-		Category tempcategory = categoryServices.findById(CategoryId);
-		
-		if(tempcategory==null) {
-			throw new RuntimeException("Category id not found - " + CategoryId);
-		}
-		
-		categoryServices.deleteById(CategoryId);
-		return "Deleted category id - " + CategoryId;
+	public void deleteCategory(@PathVariable Long CategoryId) {
+		categoryService.deleteCategory(CategoryId);
 	}
 }

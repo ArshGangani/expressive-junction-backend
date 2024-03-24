@@ -9,37 +9,55 @@ import org.springframework.transaction.annotation.Transactional;
 import com.blog.app.DAO.CategoryDAO;
 import com.blog.app.entities.Category;
 
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class CategoryService {
+
+	@Autowired
 	private CategoryDAO categoryDAO;
 	
-	@Autowired
-	public CategoryService(CategoryDAO theCategoryDAO) {
-		categoryDAO = theCategoryDAO;
+	@Transactional
+	public List<Category> getAllCategory() {
+		return categoryDAO.getAllCategory();
 	}
 
 	@Transactional
-	public List<Category> findAll() {
-		// TODO Auto-generated method stub
-		return categoryDAO.findAll();
-	}
-
-	@Transactional
-	public Category findById(int employeeId) {
-		// TODO Auto-generated method stub
-		return categoryDAO.findById(employeeId);
-	}
-
-	@Transactional
-	public void save(Category theEmployee) {
-		// TODO Auto-generated method stub
-		categoryDAO.save(theEmployee);
-		
+	public Category getCategory(Long CategoryId) {
+		Category category = categoryDAO.getCategory(CategoryId);
+		if (category == null) {
+            throw new EntityNotFoundException("Category with ID " + CategoryId + " not found");
+        }
+        return category;
 	}
 	
 	@Transactional
-	public void deleteById(int theId) {
-		categoryDAO.deleteById(theId);
+    public Category addCategory(Category category) {
+		try {
+			return categoryDAO.addCategory(category);
+		}
+		catch (EntityExistsException ex) {
+	    	throw new EntityExistsException("Category already exists: " + ex.getMessage());
+	    }
+    }
+	
+	@Transactional
+    public Category updateCategory(Long categoryId, Category updatedCategory) {
+        Category existingCategory = categoryDAO.getCategory(categoryId);
+        if (existingCategory == null) {
+            throw new EntityNotFoundException("Category with ID " + categoryId + " not found");
+        }
+        return categoryDAO.updateCategory(categoryId, updatedCategory);
+    }
+	
+	@Transactional
+	public void deleteCategory(Long categoryId) {
+		Category existingCategory = categoryDAO.getCategory(categoryId);
+		if (existingCategory == null) {
+            throw new EntityNotFoundException("Category with ID " + categoryId + " not found");
+        }
+		categoryDAO.deleteCategory(categoryId);
 	}
 
 
