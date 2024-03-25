@@ -10,18 +10,6 @@ import com.blog.app.entities.Category;
 
 import jakarta.persistence.EntityManager;
 
-package com.blog.app.DAO;
-
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.blog.app.entities.Category;
-
-import jakarta.persistence.EntityManager;
-
 @Repository
 public class CategoryDAO {
 
