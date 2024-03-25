@@ -15,8 +15,12 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 public class CategoryService {
 
-	@Autowired
 	private CategoryDAO categoryDAO;
+	
+	@Autowired
+	public CategoryService(CategoryDAO theCategoryDAO) {
+		categoryDAO = theCategoryDAO;
+	}
 	
 	@Transactional
 	public List<Category> getAllCategory() {
@@ -34,12 +38,7 @@ public class CategoryService {
 	
 	@Transactional
     public Category addCategory(Category category) {
-		try {
-			return categoryDAO.addCategory(category);
-		}
-		catch (EntityExistsException ex) {
-	    	throw new EntityExistsException("Category already exists: " + ex.getMessage());
-	    }
+		return categoryDAO.addCategory(category);
     }
 	
 	@Transactional

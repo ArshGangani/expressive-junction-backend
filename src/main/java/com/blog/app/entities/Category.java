@@ -2,6 +2,10 @@ package com.blog.app.entities;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,11 +17,12 @@ import jakarta.persistence.ManyToMany;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     private String name;
 
     @ManyToMany(mappedBy = "categories")
+    @JsonIgnore
     private Set<Post> posts = new HashSet<>();
 
     //constructor
@@ -26,7 +31,7 @@ public class Category {
 		super();
 	}
 
-	public Category(Long id, String name, Set<Post> posts) {
+	public Category(long id, String name, Set<Post> posts) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -34,11 +39,11 @@ public class Category {
 	}
 
 	//Getter Setter
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -63,4 +68,3 @@ public class Category {
 		return "Category [id=" + id + ", name=" + name + ", posts=" + posts + "]";
 	}
 }
-

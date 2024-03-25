@@ -4,6 +4,10 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,11 +23,10 @@ import jakarta.persistence.OneToMany;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     private String title;
     private String content;
-    private LocalDateTime publicationDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -35,33 +38,28 @@ public class Post {
                inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories = new HashSet<>();
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private Set<Comment> comments = new HashSet<>();
-
     //constructor
     
     public Post() {
     	super();
     }
 
-	public Post(Long id, String title, String content, LocalDateTime publicationDate, User author,
-			Set<Category> categories, Set<Comment> comments) {
+	public Post(int id, String title, String content, User author,
+			Set<Category> categories) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.content = content;
-		this.publicationDate = publicationDate;
 		this.author = author;
 		this.categories = categories;
-		this.comments = comments;
 	}	
 
 	//getter setter
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -81,14 +79,6 @@ public class Post {
 		this.content = content;
 	}
 
-	public LocalDateTime getPublicationDate() {
-		return publicationDate;
-	}
-
-	public void setPublicationDate(LocalDateTime publicationDate) {
-		this.publicationDate = publicationDate;
-	}
-
 	public User getAuthor() {
 		return author;
 	}
@@ -104,21 +94,12 @@ public class Post {
 	public void setCategories(Set<Category> categories) {
 		this.categories = categories;
 	}
-
-	public Set<Comment> getComments() {
-		return comments;
-	}
-
-	public void setComments(Set<Comment> comments) {
-		this.comments = comments;
-	}
-
+	
 	@Override
 	public String toString() {
-		return "Post [id=" + id + ", title=" + title + ", content=" + content + ", publicationDate=" + publicationDate
-				+ ", author=" + author + ", categories=" + categories + ", comments=" + comments + "]";
+		return "Post [id=" + id + ", title=" + title + ", content=" + content 
+				+ ", author=" + author + ", categories=" + categories + "]";
 	}
 
     
 }
-

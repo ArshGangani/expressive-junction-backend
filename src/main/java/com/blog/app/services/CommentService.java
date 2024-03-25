@@ -18,6 +18,9 @@ public class CommentService {
     @Autowired
     private CommentDAO commentDAO;
 
+    @Autowired
+    private PostService postService;
+    
     @Transactional
     public List<Comment> getAllComments() {
         return commentDAO.getAllComments();

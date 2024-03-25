@@ -3,6 +3,12 @@ package com.blog.app.entities;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.antlr.v4.runtime.misc.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,25 +26,17 @@ public class User {
     private String email;
     private String password;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    private Set<Post> posts = new HashSet<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Comment> comments = new HashSet<>();
-
-    // constructor
+    //constructor
 	public User() {
 		super();
 	}
 
-	public User(Long id, String username, String email, String password, Set<Post> posts, Set<Comment> comments) {
+	public User(Long id, String username, String email, String password) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
-		this.posts = posts;
-		this.comments = comments;
 	}
 
 	//getter setter
@@ -65,7 +63,7 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
 	public String getPassword() {
 		return password;
 	}
@@ -74,26 +72,10 @@ public class User {
 		this.password = password;
 	}
 
-	public Set<Post> getPosts() {
-		return posts;
-	}
-
-	public void setPosts(Set<Post> posts) {
-		this.posts = posts;
-	}
-
-	public Set<Comment> getComments() {
-		return comments;
-	}
-
-	public void setComments(Set<Comment> comments) {
-		this.comments = comments;
-	}
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", posts="
-				+ posts + ", comments=" + comments + "]";
+		return "User [id=" + id + ", username=" + username + ", email=" + email + ", password=" + password ;
 	}
 
     

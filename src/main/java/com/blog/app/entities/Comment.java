@@ -1,6 +1,11 @@
 package com.blog.app.entities;
 
 import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,14 +20,13 @@ public class Comment {
     private Long id;
 
     private String content;
-    private LocalDateTime commentDate;
 
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 
     // constructor
@@ -30,16 +34,14 @@ public class Comment {
 		super();
 	}
 
-	public Comment(Long id, String content, LocalDateTime commentDate, Post post, User user) {
+	public Comment(Long id, String content, Post post, User user) {
 		super();
 		this.id = id;
 		this.content = content;
-		this.commentDate = commentDate;
 		this.post = post;
 		this.user = user;
 	}
 
-	//getter setter
 	public Long getId() {
 		return id;
 	}
@@ -54,14 +56,6 @@ public class Comment {
 
 	public void setContent(String content) {
 		this.content = content;
-	}
-
-	public LocalDateTime getCommentDate() {
-		return commentDate;
-	}
-
-	public void setCommentDate(LocalDateTime commentDate) {
-		this.commentDate = commentDate;
 	}
 
 	public Post getPost() {
@@ -82,8 +76,7 @@ public class Comment {
 
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", content=" + content + ", commentDate=" + commentDate + ", post=" + post
-				+ ", user=" + user + "]";
+		return "Comment [id=" + id + ", content=" + content + ", post=" + post + ", user=" + user + "]";
 	}
 
 	

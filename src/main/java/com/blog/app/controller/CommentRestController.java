@@ -25,7 +25,9 @@ public class CommentRestController {
 
     @PostMapping("/comment")
     public Comment addComment(@RequestBody Comment comment) {
-        return commentService.addComment(comment);
+        commentService.addComment(comment);
+        comment = getComment(comment.getId());
+        return comment;
     }
 
     @PutMapping("/comment/{commentId}")
