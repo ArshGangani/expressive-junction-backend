@@ -12,11 +12,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.blog.app.entities.Post;
+import com.blog.app.entities.User;
 import com.blog.app.services.PostService;
+import com.blog.app.services.UserService;
 
 @RestController
 @RequestMapping("/blog")
 public class PostRestController {
+	@Autowired
+    private UserService userService;
+	
 	private PostService postService;
 	
 	@Autowired
@@ -38,26 +43,61 @@ public class PostRestController {
 		return post;
 	}
 	
-	@PostMapping("/post")
-	public Post addPost(@RequestBody Post post) {
-		postService.save(post);
-		post = postService.findById(post.getId());
-		return post;
+	@GetMapping("/post/category/{categoryid}")
+	public List<Post> findByCategory(@PathVariable int categoryid) {
+		return postService.findByCategory(categoryid);
 	}
 	
-	@PutMapping("/post")
-	public Post updatePost(@RequestBody Post post) {
+	@GetMapping("/post/user/{userid}")
+	public List<Post> findByUser(@PathVariable int userid) {
+		return postService.findByUser(userid);
+	}
+	
+	@PostMapping("/post")
+	public Post addPost(@RequestBody Post post) {
+		if(post.getAuthor().getPassword()==null) {
+			throw new RuntimeException("give password");
+		}
+		User user = userService.getUser(post.getAuthor().getId());
+		if(user==null) {
+			throw new RuntimeException("user not found ");
+		} else if(!user.getPassword().equals(post.getAuthor().getPassword())) {
+			throw new RuntimeException("Incorrect password");
+		} else {
+			postService.save(post);
+			post = postService.findById(post.getId());
+			return post;
+		}
+	}
+	
+	@PutMapping("/post/{postId}")
+	public Post updatePost(@PathVariable int postId,@RequestBody Post post) {
+		Post tempPost = postService.findById(postId);
+		System.out.println(post);
+		if(tempPost==null) {
+			throw new RuntimeException("Post not found - " + postId); 
+		}
+		if(post.getAuthor()==null) {
+			throw new RuntimeException("give user information");
+		} else if(!post.getAuthor().getPassword().equals(tempPost.getAuthor().getPassword())) {
+			throw new RuntimeException("Incorrect Password");
+		}
 		postService.save(post);
 		post = postService.findById(post.getId());
 		return post;
 	}
 	
 	@DeleteMapping("/post/{postId}")
-	public String deletePost(@PathVariable int postId) {
+	public String deletePost(@PathVariable int postId,@RequestBody User user) {
 		Post tempPost = postService.findById(postId);
-		
+		System.out.println(user);
 		if(tempPost==null) {
-			throw new RuntimeException("Post id not found - " + postId); 
+			throw new RuntimeException("Post not found - " + postId); 
+		}
+		if(user.getPassword()==null) {
+			throw new RuntimeException("give user information");
+		} else if(!user.getPassword().equals(tempPost.getAuthor().getPassword())) {
+			throw new RuntimeException("Incorrect Password");
 		}
 		postService.deleteById(postId);
 		return "Deleted Post id - " + postId;

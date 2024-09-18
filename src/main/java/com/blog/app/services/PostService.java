@@ -37,4 +37,12 @@ public class PostService {
 	public void deleteById(int theId) {
 		postDAO.deleteById(theId);
 	}
+
+	public List<Post> findByCategory(int categoryid) {
+		return PostDAO.findByCategory(categoryid);
+	}
+
+	public List<Post> findByUser(int userid) {
+		return PostDAO.findByUser(userid);
+	}
 }

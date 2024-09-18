@@ -12,7 +12,7 @@ import jakarta.persistence.TypedQuery;
 @Repository
 public class PostDAO {
 
-	private EntityManager entityManager;
+	private static EntityManager entityManager;
 	
 	@Autowired
 	public PostDAO(EntityManager theEntityManager) {
@@ -50,6 +50,16 @@ public class PostDAO {
         Post post = entityManager.find(Post.class, theId);
         entityManager.remove(post);
 		
+	}
+
+	public static List<Post> findByCategory(int categoryid) {
+		String query = "SELECT p FROM Post p JOIN p.categories c WHERE c.id = :categoryId";
+        return entityManager.createQuery(query, Post.class).setParameter("categoryId", categoryid).getResultList();
+	}
+
+	public static List<Post> findByUser(int userid) {
+		String query = "SELECT p from Post p JOIN p.author a where a.id = :userid";
+		return entityManager.createQuery(query,Post.class).setParameter("userid", userid).getResultList();
 	}
 	
 	

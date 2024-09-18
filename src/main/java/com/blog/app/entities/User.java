@@ -8,6 +8,8 @@ import org.antlr.v4.runtime.misc.NotNull;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -24,6 +26,7 @@ public class User {
 
     private String username;
     private String email;
+    @JsonProperty(access = Access.WRITE_ONLY)
     private String password;
 
     //constructor

@@ -62,4 +62,12 @@ public class CommentService {
         }
         commentDAO.deleteComment(commentId);
     }
+
+	public List<Comment> getByPost(Long postid) {
+		return commentDAO.getByPost(postid);
+	}
+
+	public List<Comment> getByUser(Long userid) {
+		return commentDAO.getByUser(userid);
+	}
 }
